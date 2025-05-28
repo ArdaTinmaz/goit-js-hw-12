@@ -1,12 +1,5 @@
 import { fetchImages } from './js/pixabay-api.js';
-import {
-  renderGallery,
-  clearGallery,
-  showLoader,
-  hideLoader,
-  showLoadMoreBtn,
-  hideLoadMoreBtn,
-} from './js/render-functions.js';
+import { renderGallery, clearGallery, showLoader, hideLoader, showLoadMoreBtn, hideLoadMoreBtn } from './js/render-functions.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
@@ -31,8 +24,8 @@ form.addEventListener('submit', async event => {
   showLoader();
 
   try {
-    const response = await fetchImages(searchQuery, page, perPage);
-    const images = response.hits;
+    const data = await fetchImages(searchQuery, page, perPage);
+    const images = data.hits;
 
     if (images.length === 0) {
       iziToast.info({
@@ -46,13 +39,13 @@ form.addEventListener('submit', async event => {
     renderGallery(images);
     hideLoader();
     showLoadMoreBtn();
-    perPage = 20;
+    perPage = 20; 
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error('Error fetching images:', error);
     iziToast.error({
       title: 'Error',
-      message: 'Something went wrong. Please try again later.',
-      position: 'topRight',
+      message: 'An error occurred while fetching images. Please try again later.',
+      position: 'topRight'
     });
     hideLoader();
   }
@@ -64,8 +57,8 @@ loadMoreBtn.addEventListener('click', async () => {
   hideLoadMoreBtn();
 
   try {
-    const response = await fetchImages(searchQuery, page, perPage);
-    const images = response.hits;
+    const data = await fetchImages(searchQuery, page, perPage);
+    const images = data.hits;
 
     if (images.length === 0) {
       iziToast.info({
@@ -86,15 +79,15 @@ loadMoreBtn.addEventListener('click', async () => {
       const cardHeight = firstCard.getBoundingClientRect().height;
       window.scrollBy({
         top: cardHeight * 2,
-        behavior: 'smooth',
+        behavior: 'smooth'
       });
     }
   } catch (error) {
-    console.error('Fetch error:', error);
+    console.error('Error fetching images:', error);
     iziToast.error({
       title: 'Error',
-      message: 'Something went wrong. Please try again later.',
-      position: 'topRight',
+      message: 'An error occurred while fetching images. Please try again later.',
+      position: 'topRight'
     });
     hideLoader();
   }

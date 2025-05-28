@@ -16,9 +16,9 @@ export async function fetchImages(query, page = 1, perPage = 40) {
 
   try {
     const response = await axios.get(BASE_URL, { params });
-    return response.data;
+    return response.data; // Sadece data kısmını döndür
   } catch (error) {
-    console.error('Error fetching images from Pixabay:', error);
-    throw error;
+    console.error('Fetch error:', error);
+    throw error; // Hata yönetimini ana dosyaya bırak
   }
 }
